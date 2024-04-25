@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panda player - Example</title>
+   <!--
+    Mandatory parameter:
+
+    * v: (video ID)
+
+    Optional parameters:
+
+    * l: (library id)
+    * color: #4874F1
+    * controlsColor: #FFF
+    * controls: play-large,play,progress,current-time,volume,captions,settings,pip,fullscreen
+    * autoplay: false
+    * muted: false
+-->
+  <iframe id="panda-XXXX" src="https://player-vz-a13f563d-bde.tv.pandavideo.com.br/embed/?v=c8a137d3-c991-4ce4-a794-ed2f0810a8f3"
+    style="border:0;width:720px;height:480px"></iframe>
+  ​
+  <div id="example">
+    <h1>Panda Player Example</h1>
+    <p id="current-time">Current time: 0</p>
+    <p id="status">Status: paused</p>
+    <div style="display: flex">
+      <button id="play">Play</button>
+      <button id="pause">Pause</button>
+      <button id="forward">Avançar 5s</button>
+    </div>
+  </div>
+  <script async src="https://player.pandavideo.com.br/api.v2.js"></script>
+  <script>
+    window.pandascripttag = window.pandascripttag || [];
+    window.pandascripttag.push(function (){
+        const player = new PandaPlayer('panda-XXXX', {
+	        onReady: () => {
+              console.log('Player is ready',player.getCurrentTime());
+              document.getElementById('play').onclick = function () {
+                player.play()
+              }
+              document.getElementById('pause').onclick = function () {
+                player.pause()
+              }
+              setInterval(() => {
+                document.getElementById('current-time').innerHTML = 'Current time: ' + player.getCurrentTime().toFixed(2) + ' seconds'
+              }, 1000)
+              player.onEvent(function ({ message }) {
+                if (message === 'panda_pause') {
+                  document.getElementById('status').innerHTML = "Status: paused";
+                } else if (message === 'panda_play') {
+                  document.getElementById('status').innerHTML = "Status: playing";
+                }
+              })
+          },
+          onError: (event) => {
+            	console.log('Player onError', event)
+          }
+      })
+    })
+
+  </script>
+  </body>
+</html>
