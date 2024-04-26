@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panda player - Example</title>
+  <title>Med Review VP</title>
    <!--
     Mandatory parameter:
 
@@ -20,10 +20,9 @@
     * autoplay: false
     * muted: false
 -->
-  <iframe id="panda-XXXX" src="https://player-vz-a13f563d-bde.tv.pandavideo.com.br/embed/?v=c8a137d3-c991-4ce4-a794-ed2f0810a8f3"
-    style="border:0;width:720px;height:480px"></iframe>
-  ​
-  <div id="example">
+  <iframe id="player-panda-iframe-qwert" src="https" style="border:0;width:100%;height:240px"></iframe>
+
+  <!--div id="example">
     <h1>Panda Player Example</h1>
     <p id="current-time">Current time: 0</p>
     <p id="status">Status: paused</p>
@@ -63,6 +62,37 @@
       })
     })
 
-  </script>
+  </script-->
+  <body>
+    <script type="text/javascript">
+      
+
+      params = getQueryStringParams();
+      myVid = unescape(params["vid"]);
+
+      setIframeAttributes();
+
+      function setIframeAttributes() {
+        document.getElementById("player-panda-iframe-qwert").setAttribute("id", "panda-" + myVid);
+        document.getElementById('panda-' + myVid).src = "https://player-vz-a13f563d-bde.tv.pandavideo.com.br/embed/?v=" + myVid;
+      }
+
+      function getQueryStringParams() {
+        var params = {},
+        pairs = document.URL.split('?')
+                .pop()
+                .split('&');
+
+        for (var i = 0, p; i < pairs.length; i++) {
+            p = pairs[i].split('=');
+            params[ p[0] ] =  p[1];
+        }     
+
+        return params;
+      }
+
+      
+    </script>
   </body>
+
 </html>
